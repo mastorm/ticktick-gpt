@@ -27,6 +27,7 @@ const (
 	ResponseType = "response_type"
 )
 
+// GetAuthorizeUrl returns the URL to redirect the user to in order to authorize the application
 func (app *Application) GetAuthorizeUrl(state string, redirectUri string) (*string, error) {
 	u, err := url.Parse(TickTickUrl)
 	if err != nil {
