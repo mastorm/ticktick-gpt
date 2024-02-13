@@ -1,3 +1,7 @@
 .env
 
 .terraform
+tf_generated/
+
+*.tfstate
+*.tfstate.backup

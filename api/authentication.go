@@ -11,5 +11,5 @@ func handleAuthorization() *http.ServeMux {
 }
 
 func handleOauthCallback(w http.ResponseWriter, r *http.Request) {
-	r.
+	w.Write([]byte("Hello, World!"))
 }

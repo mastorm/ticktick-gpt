@@ -1,18 +1,13 @@
 package main
 
 import (
-	"context"
-	"fmt"
-
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/awslabs/aws-lambda-go-api-proxy/httpadapter"
+	"github.com/mastorm/ticktick-gpt/api"
 )
 
-func HandleRequest(ctx context.Context, event interface{}) (string, error) {
-	fmt.Println("event", event)
-
-	return "Hello world", nil
-}
-
 func main() {
-	lambda.Start(HandleRequest)
+	serveMux := api.ServeMux()
+	adapter := httpadapter.New(serveMux).ProxyWithContext
+	lambda.Start(adapter)
 }

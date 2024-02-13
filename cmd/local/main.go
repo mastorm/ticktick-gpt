@@ -28,7 +28,7 @@ func main() {
 	}
 	fmt.Println(app.ClientId)
 
-	mux := api.ApiServeMux()
+	mux := api.ServeMux()
 
 	http.ListenAndServe(":8080", mux)
 }

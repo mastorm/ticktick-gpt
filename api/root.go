@@ -2,7 +2,7 @@ package api
 
 import "net/http"
 
-func ApiServeMux() *http.ServeMux {
+func ServeMux() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.Handle("/", handleAuthorization())
