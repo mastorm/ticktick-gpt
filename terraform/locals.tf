@@ -1,5 +1,5 @@
 locals {
-  function_name = "ticktick-go"
+  function_name = "ticktick-gpt"
   src_path      = "../${path.module}/cmd/lambda"
 
   binary_name  = local.function_name
