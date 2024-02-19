@@ -24,11 +24,11 @@ func main() {
 
 	app := ticktick.Application{
 		ClientId: os.Getenv(EnvClientId),
-		Scopes:   []string{ticktick.SCOPES_TASK_READ, ticktick.SCOPES_TASK_WRITE},
+		Scopes:   []string{ticktick.ScopesTasksRead, ticktick.ScopesTasksWrite},
 	}
 	fmt.Println(app.ClientId)
 
-	mux := api.ServeMux()
+	mux := api.ServeMux(&app)
 
 	err = http.ListenAndServe(":8080", mux)
 	if err != nil {

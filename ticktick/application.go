@@ -6,12 +6,12 @@ import (
 )
 
 const (
-	SCOPES_TASK_READ  = "task:read"
-	SCOPES_TASK_WRITE = "task:write"
+	ScopesTasksRead  = "tasks:read"
+	ScopesTasksWrite = "tasks:write"
 )
 
 const (
-	TickTickUrl = "https://ticktick.com"
+	Url = "https://ticktick.com"
 )
 
 type Application struct {
@@ -29,7 +29,7 @@ const (
 
 // GetAuthorizeUrl returns the URL to redirect the user to in order to authorize the application
 func (app *Application) GetAuthorizeUrl(state string, redirectUri string) (*string, error) {
-	u, err := url.Parse(TickTickUrl)
+	u, err := url.Parse(Url)
 	if err != nil {
 		return nil, err
 	}

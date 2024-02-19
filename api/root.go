@@ -1,11 +1,18 @@
 package api
 
-import "net/http"
+import (
+	"github.com/mastorm/ticktick-gpt/ticktick"
+	"net/http"
+)
 
-func ServeMux() *http.ServeMux {
+func ServeMux(app *ticktick.Application) *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.Handle("/", handleAuthorization())
+	route := AuthRoute{
+		app: app,
+	}
+
+	mux.Handle("/", route.handleAuthorization(app))
 
 	return mux
 }
