@@ -19,14 +19,6 @@ type Application struct {
 	Scopes   []string
 }
 
-const (
-	clientId     = "client_id"
-	Scope        = "scope"
-	RedirectUri  = "redirect_uri"
-	State        = "state"
-	ResponseType = "response_type"
-)
-
 // GetAuthorizeUrl returns the URL to redirect the user to in order to authorize the application
 func (app *Application) GetAuthorizeUrl(state string, redirectUri string) (*string, error) {
 	u, err := url.Parse(Url)
