@@ -1,13 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"github.com/labstack/echo/v4"
+	"github.com/mastorm/ticktick-gpt/internal/handler"
 	"log"
-	"net/http"
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/mastorm/ticktick-gpt/api"
 	"github.com/mastorm/ticktick-gpt/ticktick"
 )
 
@@ -26,12 +25,14 @@ func main() {
 		ClientId: os.Getenv(EnvClientId),
 		Scopes:   []string{ticktick.ScopesTasksRead, ticktick.ScopesTasksWrite},
 	}
-	fmt.Println(app.ClientId)
 
-	mux := api.ServeMux(&app)
-
-	err = http.ListenAndServe(":8080", mux)
-	if err != nil {
-		panic(err)
+	h := handler.Handler{
+		TodoApp: app,
 	}
+
+	e := echo.New()
+	e.GET("/auth/redirect", h.TickTickAuth)
+	e.GET("/oauth/callback", h.TickTickAuthCallback)
+	
+	e.Logger.Fatal(e.Start(":8080"))
 }
