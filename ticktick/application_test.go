@@ -16,11 +16,12 @@ func TestBuildApplicationUrl(t *testing.T) {
 	}
 
 	app := ticktick.Application{
-		ClientId: "client_id",
-		Scopes:   []string{"scope"},
+		ClientId:    "client_id",
+		Scopes:      []string{"scope"},
+		RedirectUri: "redirect_uri",
 	}
 
-	result, err := app.GetAuthorizeUrl("state", "redirect_uri")
+	result, err := app.GetAuthorizeUrl("state")
 
 	if err != nil {
 		t.Error(err)

@@ -5,7 +5,7 @@ import (
 )
 
 func (h *Handler) TickTickAuth(c echo.Context) (err error) {
-	url, err := h.TodoApp.GetAuthorizeUrl("lul", "http://localhost:8080/oauth/callback")
+	url, err := h.TodoApp.GetAuthorizeUrl("lul")
 	if err != nil {
 		return err
 	}
@@ -15,5 +15,10 @@ func (h *Handler) TickTickAuth(c echo.Context) (err error) {
 }
 
 func (h *Handler) TickTickAuthCallback(c echo.Context) error {
-	return c.String(200, "Hello, world!")
+	code := c.QueryParam("code")
+	res, err := h.TodoApp.RequestAccessToken(code)
+	if err != nil {
+		return err
+	}
+	return c.String(200, res.AccessToken)
 }

@@ -15,28 +15,21 @@ const (
 )
 
 type Application struct {
-	ClientId string
-	Scopes   []string
+	ClientId     string
+	ClientSecret string
+	Scopes       []string
+	RedirectUri  string
 }
 
-// GetAuthorizeUrl returns the URL to redirect the user to in order to authorize the application
-func (app *Application) GetAuthorizeUrl(state string, redirectUri string) (*string, error) {
+func getUrl(path string) (*url.URL, error) {
 	u, err := url.Parse(Url)
 	if err != nil {
 		return nil, err
 	}
+	u.Path = path
+	return u, nil
+}
 
-	u.Path = "/oauth/authorize"
-
-	params := url.Values{}
-	params.Add("scope", strings.Join(app.Scopes, " "))
-	params.Add("client_id", app.ClientId)
-	params.Add("state", state)
-	params.Add("redirect_uri", redirectUri)
-	params.Add("response_type", "code")
-
-	u.RawQuery = params.Encode()
-	result := u.String()
-
-	return &result, nil
+func formatScopes(app *Application) string {
+	return strings.Join(app.Scopes, " ")
 }

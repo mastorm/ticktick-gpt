@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/mastorm/ticktick-gpt/internal/handler"
+	"github.com/mastorm/ticktick-gpt/ticktick"
 	"log"
 	"os"
-
-	"github.com/joho/godotenv"
-	"github.com/mastorm/ticktick-gpt/ticktick"
 )
 
 const (
@@ -22,8 +22,10 @@ func main() {
 	}
 
 	app := ticktick.Application{
-		ClientId: os.Getenv(EnvClientId),
-		Scopes:   []string{ticktick.ScopesTasksRead, ticktick.ScopesTasksWrite},
+		ClientId:     os.Getenv(EnvClientId),
+		ClientSecret: os.Getenv(EnvClientSecret),
+		Scopes:       []string{ticktick.ScopesTasksRead, ticktick.ScopesTasksWrite},
+		RedirectUri:  "http://localhost:8080/oauth/callback",
 	}
 
 	h := handler.Handler{
@@ -31,8 +33,9 @@ func main() {
 	}
 
 	e := echo.New()
+	e.Use(middleware.Logger())
 	e.GET("/auth/redirect", h.TickTickAuth)
 	e.GET("/oauth/callback", h.TickTickAuthCallback)
-	
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
